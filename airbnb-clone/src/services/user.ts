@@ -1,0 +1,20 @@
+import { request } from "../configs/api";
+import { UserLogin, UserRegister } from "../interfaces/user";
+
+class UserService {
+    loginUser(data: UserLogin) {
+        return request({
+            url: `/api/auth/signin`,
+            method: "POST",
+            data,
+        })
+    };
+    signUpUser(data: UserRegister) {
+        return request({
+            url: `/api/auth/signup`,
+            method: "POST",
+            data,
+        })
+    }
+}
+export const userService: UserService = new UserService();
