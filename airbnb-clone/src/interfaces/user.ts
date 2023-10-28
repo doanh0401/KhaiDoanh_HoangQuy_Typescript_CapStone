@@ -3,12 +3,10 @@ export interface UserLogin {
     matKhau: string;
 }
 export interface UserRegister {
-    id: string,
     name: string,
     email:  string,
     password: string,
-    phone: number,
+    phone: string,
     birthday: string,
     gender: string,
-    role: string
 }
