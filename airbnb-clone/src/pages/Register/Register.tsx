@@ -16,9 +16,7 @@ export default function Register() {
 
   const registerSchema = Yup.object({
     name: Yup.string().required("(*) Tên Người Dùng là bắt buộc"),
-    email: Yup.string()
-      .email("(*) Email không hợp lệ")
-      .required("(*) Email là bắt buộc"),
+    email: Yup.string().required("(*) Email là bắt buộc").email("(*) Email không hợp lệ"),
     phone: Yup.string()
       .matches(/^[0-9]{10}$/, "(*) Số Điện Thoại không hợp lệ")
       .required("(*) Số Điện Thoại là bắt buộc"),
