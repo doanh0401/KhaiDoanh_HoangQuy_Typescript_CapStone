@@ -8,12 +8,26 @@ import Room from "../pages/Admin/Rooms/Room";
 import Place from "../pages/Admin/Place/Place";
 import Addnew from "../pages/Admin/AddNew/Addnew";
 import Users from "../pages/Admin/Users/Users";
+import PageNotFound from '../pages/PageNotFound/PageNotFound';
+import Home from '../pages/Home/Home';
+import RoomDetail from '../pages/RoomDetail/RoomDetail';
+
 
 export default function Router() {
   const routing = useRoutes([
     {
       path: "/",
       element: <HomeLayout />,
+        children: [
+          {
+            path: "/",
+            element: <Home />,
+          },
+          {
+            path: "/room-detail/:roomId",
+            element: <RoomDetail />
+          }
+        ]
     },
     {
       path: "/login",
@@ -41,6 +55,10 @@ export default function Router() {
         {
           path: "/admin/addnew",
           element: <Addnew />
+        },
+        {
+          path: "*",
+          element: <PageNotFound />
         },
       ]
     },
