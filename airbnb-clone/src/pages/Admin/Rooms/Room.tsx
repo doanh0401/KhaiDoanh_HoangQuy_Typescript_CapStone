@@ -1,35 +1,84 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Table, Input } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { EditOutlined, DeleteOutlined, UserOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { RootDispatch } from "../../../store/config";
 import { useDispatch } from "react-redux";
 import { RoomType } from "../../../interfaces/admin";
 import { adminService } from "../../../services/admin";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { FormikProps, useFormik } from "formik";
 const { Search } = Input;
 
 const Room: React.FC = () => {
-  const dispatch: RootDispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const getRoomList = () => {
     const roomList = getRoomListApi();
     dispatch(roomList);
   };
   const [roomsList, setRoomsList] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getRoomList();
   }, []);
   const getRoomListApi = () => {
-    return async (dispatch: RootDispatch) => {
+    return async (dispatch: any) => {
       try {
         const result = await adminService.listRooms();
         const content = result.data.content;
+        console.log(content);
+
         setRoomsList(content);
       } catch (err) {
         console.log(err);
       }
     };
+  };
+  const uploadImg = async (id: any, formData: any) => {
+    try {
+      const result = await adminService.uploadImgApi(id, formData);
+      alert("Upload thành công!");
+    } catch (errors) {
+      console.log(errors);
+    }
+  };
+  const formik: FormikProps<any> = useFormik<any>({
+    initialValues: {
+      maPhong:"",
+      hinhAnh: {},
+    },
+    onSubmit: async (values: any) => {
+      let formData = new FormData();
+      formData.append("File", values.hinhAnh, values.hinhAnh.name);
+      console.log(values.hinhAnh);
+      console.log(values.maPhong);
+      await dispatch(uploadImg(values.maPhong, formData));
+    },
+  });
+  const [imgSrc, setImgSrc] = useState<any | null>("");
+
+  const handleChangeFile = (e: any) => {
+    if (
+      e.target.files[0].type === "image/jpeg" ||
+      e.target.files[0].type === "image/jpg" ||
+      e.target.files[0].type === "image/gif" ||
+      e.target.files[0].type === "image/png"
+    ) {
+      let reader = new FileReader();
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = (e) => {
+          setImgSrc(e.target?.result);
+        };
+      }
+      const roomId = e.target.getAttribute("data-room-id"); // Lấy mã phòng từ thuộc tính data-room-id
+      console.log("Mã phòng:", roomId);
+
+      formik.setFieldValue("maPhong", roomId);
+      formik.setFieldValue("hinhAnh", e.target.files[0]);
+    }
   };
   const columns: ColumnsType<RoomType> = [
     {
@@ -111,13 +160,21 @@ const Room: React.FC = () => {
             >
               <DeleteOutlined />
             </span>
+            <input
+              type="file"
+              onChange={handleChangeFile}
+              data-room-id={room.id}
+              accept="image/jpeg, image/jpg, image/gif, image/png"
+            />
           </Fragment>
         );
       },
       width: 200,
     },
   ];
-
+  const handleSubmit = () => {
+    formik.handleSubmit();
+  };
   const data = roomsList;
 
   const onChange: TableProps<RoomType>["onChange"] = (
@@ -133,12 +190,16 @@ const Room: React.FC = () => {
       <h1 style={{ marginBottom: "20px", fontSize: "2rem" }}>
         Quản lí phòng thuê
       </h1>
-      <Button
-        // onClick={() => navigate(`/admin/film/addnew`)}
+      <Button style={{ marginBottom: "20px" }}>Thêm phòng</Button>
+      <br></br>
+      <button
+        type="button"
+        onClick={handleSubmit}
+        className="btn btn-primary"
         style={{ marginBottom: "20px" }}
       >
-        Thêm phòng
-      </Button>
+        Upload hình ảnh
+      </button>
       <Search
         style={{
           marginBottom: "20px",
