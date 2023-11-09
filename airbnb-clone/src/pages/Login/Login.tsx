@@ -5,24 +5,24 @@ import * as Yup from "yup";
 import { UserLogin } from "../../interfaces/user";
 import { userService } from "../../services/user";
 import { useDispatch } from "react-redux";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userActions } from "../../store/reducers/userReducer";
 
 export default function Login() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required("(*) Email không được để trống"),
-    matKhau: Yup.string().required("(*) Mật khẩu không được để trống"),
+    password: Yup.string().required("(*) Mật khẩu không được để trống"),
   });
   const handleSubmit = async (values: UserLogin, { resetForm }: any) => {
     try {
       const result = await userService.loginUser(values);
 
-      redirect("/");
+      navigate("/");
 
       dispatch(userActions.setUserInfo(result.data.content));
-
+      
       localStorage.setItem("USER_INFO", JSON.stringify(result.data.content));
 
       resetForm();
@@ -38,7 +38,7 @@ export default function Login() {
           <Formik
             initialValues={{
               email: "",
-              matKhau: "",
+              password: "",
             }}
             validationSchema={LoginSchema}
             onSubmit={handleSubmit}
@@ -80,13 +80,13 @@ export default function Login() {
                   </label>
                   <Field
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    name="matKhau"
+                    name="password"
                     type="password"
                     placeholder="Mật khẩu"
                   />
                   <span></span>
                   <ErrorMessage
-                    name="matKhau"
+                    name="password"
                     component="label"
                     className="form-label form-label-login text-danger"
                   />

@@ -5,14 +5,14 @@ import { UserLogin, UserRegister } from "../interfaces/user";
 class UserService {
   loginUser(data: UserLogin) {
     return request({
-      url: `/api/auth/signin`,
+      url: "/auth/signin",
       method: "POST",
       data,
     });
   }
   signUpUser(data: UserRegister) {
     return request({
-      url: `/api/auth/signup`,
+      url: `/auth/signup`,
       method: "POST",
       data,
     });

@@ -1,7 +1,8 @@
 export interface UserLogin {
   email: string;
-  matKhau: string;
+  password: string;
 }
+
 export interface UserRegister {
   name: string;
   email: string;
