@@ -1,145 +1,102 @@
-import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import TuneIcon from '@mui/icons-material/Tune';
-import Button from '@mui/material/Button';
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation'; 
 import 'swiper/css/pagination';
 import "./Carousel.scss"
-
-// import required modules
 import { Navigation } from 'swiper/modules';
-import { NavLink } from 'react-router-dom';
 
 const image1 = [
   {
-    url: "./images/Bắc cực.jpg",
+    url: "./img/Bắc cực.jpg",
     name: "Bắc cực",
   },
   {
-    url: "./images/bãi biển.jpg",
+    url: "./img/Bãi biển.jpg",
     name: "Bãi biển",
   },
   {
-    url: "./images/cabin.jpg",
+    url: "./img/Cabin.jpg",
     name: "Cabin",
   },
   {
-    url: "./images/Chơi golf.jpg",
+    url: "./img/Chơi golf.jpg",
     name: "Chơi golf",
   },
   {
-    url: "./images/công viên quốc gia.jpg",
+    url: "./img/công viên quốc gia.jpg",
     name: "Công viên quốc gia",
   },
   {
-    url: "./images/Đảo.jpg",
+    url: "./img/Đảo.jpg",
     name: "Đảo",
   },
   {
-    url: "./images/hang động.jpg",
+    url: "./img/hang động.jpg",
     name: "Hang động",
   },
   {
-    url: "./images/hồ bơi tuyệt vời.jpg",
+    url: "./img/Hồ bơi tuyệt vời.jpg",
     name: "Hồ bơi tuyệt vời",
   },
   {
-    url: "./images/khung cảnh tuyệt vời.jpg",
+    url: "./img/khung cảnh tuyệt vời.jpg",
     name: "Khung cảnh tuyệt vời",
   },
   {
-    url: "./images/lướt sóng.jpg",
+    url: "./img/lướt sóng.jpg",
     name: "Lướt sóng",
   },
   {
-    url: "./images/nhà chung.jpg",
-    name: "Nhà chung",
-  },
-  {
-    url: "./images/nhà dưới lòng đất.jpg",
+    url: "./img/nhà dưới lòng đất.jpg",
     name: "Nhà dưới lòng đất",
   },
   {
-    url: "./images/nhà nhỏ.jpg",
+    url: "./img/nhà nhỏ.jpg",
     name: "Nhà nhỏ",
   },
   {
-    url: "./images/nhiệt đới.jpg",
-    name: "Nhiệt đới",
-  },
-  {
-    url: "./images/Bắc cực.jpg",
-    name: "Bắc cực",
-  },
-  {
-    url: "./images/Phục vụ bữa sáng.jpg",
-    name: "Phục vụ bữa sáng",
-  },
-  {
-    url: "./images/thật ấn tượng.jpg",
+    url: "./img/thật ấn tượng.jpg",
     name: "Thật ấn tượng",
   },
   {
-    url: "./images/thiết kế.jpg",
+    url: "./img/thiết kế.jpg",
     name: "Thiết kế",
   },
   {
-    url: "./images/ven hồ.jpg",
+    url: "./img/ven hồ.jpg",
     name: "Ven hồ",
   },
   {
-    url: "./images/thiết kế.jpg",
+    url: "./img/thiết kế.jpg",
     name: "Thiết kế",
   },
   {
-    url: "./images/bietthu.jpg",
-    name: "Biệt thự",
-  },
-  {
-    url: "./images/khucamtrai.jpg",
-    name: "Khu cắm trại",
-  },
-  {
-    url: "./images/nhakhungchua.jpg",
+    url: "./img/Khung nhà chữ A.jpg",
     name: "Nhà khung chữ A",
-  },
-  {
-    url: "./images/laudai.jpg",
-    name: "Lâu đài",
-  },
+  }
 ];
 export default function Carousel() {
   return (
-    <div className="flex item-swiper">
+    <div className="flex container mx-auto sticky top-32">
 
       <Swiper
-        slidesPerView={8}
+        slidesPerView={5}
         spaceBetween={10}
-        className="mySwiper"
+        className="mySwiper text-center"
         modules={[Navigation]}
         navigation={true}
       >
         {image1.map((item, index) => {
           return (
-            <SwiperSlide key={index}>
-              <NavLink to={"/"} key={index} className="font-medium " >
-                <span className="flex flex-col items-center slick-item slick-item-img ">
-                  <img src={item.url} alt="..." className="w-6 " />
-                  <span className="text-xs hover:text-black ">{item.name}</span>
+            <SwiperSlide key={index}>     
+                <span className="flex flex-col items-center slick-item slick-item-img">
+                  <img src={item.url} alt="..." width="24" height="24" />
+                  <span>{item.name}</span>  
                 </span>
-              </NavLink>
             </SwiperSlide>
           );
         })}
       </Swiper>
-      <div className=" flex items-center ml-2 ">
-        <Button className="flex items-center button-filter border rounded-md text-base ">
-          <TuneIcon fontSize='small' className="mr-2" />
-          <span className='filter'>Bộ lọc</span>
-        </Button>
-      </div>
     </div>
 
   )

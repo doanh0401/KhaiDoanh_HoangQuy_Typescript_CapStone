@@ -4,19 +4,19 @@ import { request } from "../configs/api";
 class AdminService {
   listRooms() {
     return request({
-      url: `/api/phong-thue`,
+      url: `/phong-thue`,
       method: `GET`,
     });
   }
   listUsers() {
     return request({
-      url: `/api/users`,
+      url: `/users`,
       method: "GET",
     });
   }
   listPlaces() {
     return request({
-      url: `/api/vi-tri`,
+      url: `/vi-tri`,
       method: "GET",
     });
   }

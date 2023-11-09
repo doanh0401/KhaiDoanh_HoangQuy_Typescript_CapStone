@@ -6,8 +6,8 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+
+import { Breadcrumb, Layout, Menu, MenuProps, theme } from 'antd';
 import { NavLink, Outlet } from "react-router-dom";
 import SubMenu from "antd/es/menu/SubMenu";
 

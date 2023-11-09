@@ -1,11 +1,14 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { BASE_URL, TOKEN_CYB } from "../constants/api";
 import { store } from "../store/config";
+
+const state = store.getState();
 
 const request: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     TokenCybersoft: TOKEN_CYB,
+    token: state.userReducer.userInfo ? state.userReducer.userInfo.token : "",
   },
 });
 
