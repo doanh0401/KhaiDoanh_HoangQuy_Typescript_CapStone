@@ -1,6 +1,6 @@
 import axios from "axios";
 import { request } from "../configs/api";
-import { UserLogin, UserRegister } from "../interfaces/user";
+import { UserDisplay, UserLogin, UserRegister } from "../interfaces/user";
 
 class UserService {
   loginUser(data: UserLogin) {
@@ -17,6 +17,18 @@ class UserService {
       data,
     });
   }
-  
+  userInfoApi(id:string) {
+    return request({
+      url: `/users/${id}`,
+      method: "GET",
+    })
+  }
+  updateUserInfoApi(id:string, data:UserDisplay) {
+    return request({
+      url: `/users/${id}`,
+      method: "PUT",
+      data,
+    })
+  }
 }
 export const userService: UserService = new UserService();

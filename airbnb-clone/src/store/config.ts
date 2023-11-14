@@ -3,9 +3,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { userReducer } from "./reducers/userReducer";
+import { roomReducer } from "./reducers/roomReducer";
 
 const rootReducer = combineReducers({
     userReducer: userReducer,
+    roomReducer: roomReducer
 });
 
 export const store = configureStore({

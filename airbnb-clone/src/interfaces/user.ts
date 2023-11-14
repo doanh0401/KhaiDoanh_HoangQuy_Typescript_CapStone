@@ -22,3 +22,11 @@ export interface User {
   gender: boolean;
   role: string;
 }
+
+export interface UserDisplay {
+    name: string,
+    birthday: string,
+    email: string,
+    phone: string,
+    gender: boolean,
+}
