@@ -32,11 +32,11 @@ class AdminService {
       },
     });
   }
-  uploadImgApi(id: any, formData: any) {
+  uploadImgApi(maPhong: any, formFile: any) {
     return axios({
-      url: `https://airbnbnew.cybersoft.edu.vn/api/phong-thue/upload-hinh-phong?maPhong=${id}`,
+      url: `https://airbnbnew.cybersoft.edu.vn/api/phong-thue/upload-hinh-phong?maPhong=${maPhong}`,
       method: "POST",
-      data: formData,
+      data: formFile,
       headers: {
         tokenCybersoft:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MSIsIkhldEhhblN0cmluZyI6IjIzLzAyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcwODY0NjQwMDAwMCIsIm5iZiI6MTY4MDM2ODQwMCwiZXhwIjoxNzA4Nzk0MDAwfQ.m054V9MFrBY26j2t-FxqIXGcOVQim2UUk_G-OoewJUY",

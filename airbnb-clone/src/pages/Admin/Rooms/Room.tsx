@@ -36,9 +36,9 @@ const Room: React.FC = () => {
       }
     };
   };
-  const uploadImg = async (id: any, formData: any) => {
+  const uploadImg = async (maPhong: any, formFile: any) => {
     try {
-      const result = await adminService.uploadImgApi(id, formData);
+      const result = await adminService.uploadImgApi(maPhong, formFile);
       alert("Upload thành công!");
     } catch (errors) {
       console.log(errors);
@@ -50,11 +50,11 @@ const Room: React.FC = () => {
       hinhAnh: {},
     },
     onSubmit: async (values: any) => {
-      let formData = new FormData();
-      formData.append("File", values.hinhAnh, values.hinhAnh.name);
+      let formFile = new FormData();
+      formFile.append("formFile", values.hinhAnh, values.hinhAnh.name);
       console.log(values.hinhAnh);
       console.log(values.maPhong);
-      await dispatch(uploadImg(values.maPhong, formData));
+      await dispatch(uploadImg(values.maPhong, formFile));
     },
   });
   const [imgSrc, setImgSrc] = useState<any | null>("");
@@ -73,10 +73,10 @@ const Room: React.FC = () => {
           setImgSrc(e.target?.result);
         };
       }
-      const roomId = e.target.getAttribute("data-room-id"); // Lấy mã phòng từ thuộc tính data-room-id
-      console.log("Mã phòng:", roomId);
+      const maPhong = e.target.getAttribute("data-room-id"); // Lấy mã phòng từ thuộc tính data-room-id
+      console.log("Mã phòng:", maPhong);
 
-      formik.setFieldValue("maPhong", roomId);
+      formik.setFieldValue("maPhong", maPhong);
       formik.setFieldValue("hinhAnh", e.target.files[0]);
     }
   };
