@@ -1,4 +1,5 @@
 export type RoomListResponse = HttpResponse<RoomDto[]>
+export type RoomByLocationResponse = HttpResponse<RoomByLocationDto[]>
 
 export interface RoomDto {
     id: number,
@@ -21,4 +22,10 @@ export interface RoomDto {
     maViTri: number,
     hinhAnh: string
 }
-
+export interface RoomByLocationDto {
+    id: number,
+    tenViTri: string,
+    tinhThanh: string,
+    quocGia: string,
+    hinhAnh: string,
+}

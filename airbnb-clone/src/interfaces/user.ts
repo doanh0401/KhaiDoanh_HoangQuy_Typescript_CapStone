@@ -1,7 +1,8 @@
 export interface UserLogin {
   email: string;
-  matKhau: string;
+  password: string;
 }
+
 export interface UserRegister {
   name: string;
   email: string;
@@ -20,4 +21,12 @@ export interface User {
   avatar: string;
   gender: boolean;
   role: string;
+}
+
+export interface UserDisplay {
+    name: string,
+    birthday: string,
+    email: string,
+    phone: string,
+    gender: boolean,
 }
