@@ -43,3 +43,23 @@ export interface formDataRoom {
   maViTri: number;
   hinhAnh: string;
 }
+export interface addUser{
+  id: number,
+  name: string,
+  email: string,
+  password: string,
+  phone: string,
+  birthday: string,
+  gender: boolean,
+  role: string
+}
+export interface editUser{
+  id: number,
+  name: string,
+  email: string,
+  phone: string,
+  birthday: string,
+  gender: boolean,
+  role: string
+}
+

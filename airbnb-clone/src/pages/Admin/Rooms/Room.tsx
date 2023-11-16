@@ -12,41 +12,34 @@ const { Search } = Input;
 
 const Room: React.FC = () => {
   const dispatch: any = useDispatch();
-  const getRoomList = () => {
-    const roomList = getRoomListApi();
-    dispatch(roomList);
-  };
+  
   const [roomsList, setRoomsList] = useState([]);
-
   const navigate = useNavigate();
-
   useEffect(() => {
-    getRoomList();
+    getRoomListApi();
   }, []);
-  const getRoomListApi = () => {
-    return async (dispatch: any) => {
-      try {
-        const result = await adminService.listRooms();
-        const content = result.data.content;
-        console.log(content);
-
-        setRoomsList(content);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const getRoomListApi = async () => {
+    try {
+      const result = await adminService.listRooms();
+      const content = result.data.content;
+      console.log(content);
+      setRoomsList(content);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const uploadImg = async (maPhong: any, formFile: any) => {
     try {
       const result = await adminService.uploadImgApi(maPhong, formFile);
       alert("Upload thành công!");
+      window.location.reload();
     } catch (errors) {
       console.log(errors);
     }
   };
   const formik: FormikProps<any> = useFormik<any>({
     initialValues: {
-      maPhong:"",
+      maPhong: "",
       hinhAnh: {},
     },
     onSubmit: async (values: any) => {
@@ -78,6 +71,15 @@ const Room: React.FC = () => {
 
       formik.setFieldValue("maPhong", maPhong);
       formik.setFieldValue("hinhAnh", e.target.files[0]);
+    }
+  };
+  const fetchDelete = async (id: any) => {
+    try {
+      const result = await adminService.xoaPhongApi(id);
+      alert("Xoá thành công!");
+      dispatch(getRoomListApi());
+    } catch (errors: any) {
+      console.log("errors", errors.response?.data);
     }
   };
   const columns: ColumnsType<RoomType> = [
@@ -139,7 +141,7 @@ const Room: React.FC = () => {
           <Fragment>
             <NavLink
               key={1}
-              to={``}
+              to={`/admin/edit/${room.id}`}
               style={{ marginRight: "20px", fontSize: "30px", color: "blue" }}
             >
               <EditOutlined />
@@ -152,11 +154,11 @@ const Room: React.FC = () => {
                 color: "red",
                 cursor: "pointer",
               }}
-              // onClick={() => {
-              //   if (window.confirm("Bạn có chắc muốn xóa phim này không?")) {
-              //     dispatch(fetchDelete(film.maPhim));
-              //   }
-              // }}
+              onClick={() => {
+                if (window.confirm("Bạn có chắc muốn xóa phòng này không?")) {
+                  fetchDelete(room.id);
+                }
+              }}
             >
               <DeleteOutlined />
             </span>
@@ -190,7 +192,14 @@ const Room: React.FC = () => {
       <h1 style={{ marginBottom: "20px", fontSize: "2rem" }}>
         Quản lí phòng thuê
       </h1>
-      <Button style={{ marginBottom: "20px" }}>Thêm phòng</Button>
+      <button
+        type="button"
+        onClick={() => navigate(`/admin/addnew`)}
+        className="btn btn-outline-secondary "
+        style={{ marginBottom: "20px" }}
+      >
+        Thêm phim
+      </button>
       <br></br>
       <button
         type="button"
@@ -205,12 +214,13 @@ const Room: React.FC = () => {
           marginBottom: "20px",
           backgroundColor: "#4096ff",
           borderRadius: "5px",
+          height: "40px",
         }}
         placeholder="input search text"
         enterButton="Search"
         size="large"
       />
-      <Table columns={columns} dataSource={data} onChange={onChange} />; ;
+      <Table columns={columns} dataSource={data} onChange={onChange} />
     </div>
   );
 };

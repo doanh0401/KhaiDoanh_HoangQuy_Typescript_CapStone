@@ -4,10 +4,12 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { userReducer } from "./reducers/userReducer";
 import { roomReducer } from "./reducers/roomReducer";
+import { adminReducer } from "./reducers/adminReducer";
 
 const rootReducer = combineReducers({
     userReducer: userReducer,
-    roomReducer: roomReducer
+    roomReducer: roomReducer,
+    adminReducer: adminReducer,
 });
 
 export const store = configureStore({

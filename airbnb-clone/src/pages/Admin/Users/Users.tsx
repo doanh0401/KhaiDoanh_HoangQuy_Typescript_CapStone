@@ -1,39 +1,76 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Table, Input } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, UserOutlined } from "@ant-design/icons";
 import { RootDispatch } from "../../../store/config";
 import { useDispatch } from "react-redux";
 import { UserType } from "../../../interfaces/admin";
 import { adminService } from "../../../services/admin";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { FormikProps, useFormik } from "formik";
 const { Search } = Input;
 const Users: React.FC = () => {
-  const dispatch: RootDispatch = useDispatch();
-  const getUserList = () => {
-    const usersList = getUsersListApi();
-    dispatch(usersList);
-  };
+  const dispatch: any = useDispatch();
+  const navigate = useNavigate();
+
   const [usersList, setUsersList] = useState([]);
   console.log(usersList);
 
   useEffect(() => {
-    getUserList();
+    getUsersListApi();
   }, []);
-  const getUsersListApi = () => {
-    return async (dispatch: RootDispatch) => {
-      try {
-        const result = await adminService.listUsers();
-        const content = result.data.content;
-        setUsersList(content);
-      } catch (err) {
-        console.log(err);
+  const getUsersListApi = async () => {
+    try {
+      const result = await adminService.listUsers();
+      const content = result.data.content;
+      setUsersList(content);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const [imgSrc, setImgSrc] = useState<any | null>("");
+  const formik: FormikProps<any> = useFormik<any>({
+    initialValues: {
+      maPhong: "",
+      hinhAnh: {},
+    },
+    onSubmit: async (values: any) => {
+      let formFile = new FormData();
+      formFile.append("formFile", values.hinhAnh, values.hinhAnh.name);
+      console.log(values.hinhAnh);
+      console.log(values.maPhong);
+      // await dispatch(uploadImg(values.maPhong, formFile));
+    },
+  });
+  const fetchDelete = async (id: any) => {
+    try {
+      const result = await adminService.xoaUserApi(id);
+      alert("Xoá thành công!");
+      dispatch(getUsersListApi());
+    } catch (errors: any) {
+      console.log("errors", errors.response?.data);
+    }
+  };
+  const handleChangeFile = (e: any) => {
+    if (
+      e.target.files[0].type === "image/jpeg" ||
+      e.target.files[0].type === "image/jpg" ||
+      e.target.files[0].type === "image/gif" ||
+      e.target.files[0].type === "image/png"
+    ) {
+      let reader = new FileReader();
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = (e) => {
+          setImgSrc(e.target?.result);
+        };
       }
-    };
+      const maPhong = e.target.getAttribute("data-room-id"); // Lấy mã phòng từ thuộc tính data-room-id
+      console.log("Mã phòng:", maPhong);
+
+      formik.setFieldValue("maPhong", maPhong);
+      formik.setFieldValue("hinhAnh", e.target.files[0]);
+    }
   };
   const columns: ColumnsType<UserType> = [
     {
@@ -92,13 +129,13 @@ const Users: React.FC = () => {
     },
     {
       title: "Hành động",
-      dataIndex: "maPhim",
+      dataIndex: "id",
       render: (text, user) => {
         return (
           <Fragment>
             <NavLink
               key={1}
-              to={``}
+              to={`/admin/edituser/${user.id}`}
               style={{ marginRight: "20px", fontSize: "30px", color: "blue" }}
             >
               <EditOutlined />
@@ -111,24 +148,20 @@ const Users: React.FC = () => {
                 color: "red",
                 cursor: "pointer",
               }}
-              // onClick={() => {
-              //   if (window.confirm("Bạn có chắc muốn xóa phim này không?")) {
-              //     dispatch(fetchDelete(film.maPhim));
-              //   }
-              // }}
+              onClick={() => {
+                if (window.confirm("Bạn có chắc muốn xóa phim này không?")) {
+                  fetchDelete(user.id);
+                }
+              }}
             >
               <DeleteOutlined />
             </span>
-            <NavLink
-              key={3}
-              to={``}
-              style={{ marginRight: "20px", fontSize: "30px", color: "green" }}
-              // onClick={() => {
-              //   localStorage.setItem("filmParams", JSON.stringify(user));
-              // }}
-            >
-              <UserOutlined />
-            </NavLink>
+            <input
+              type="file"
+              onChange={handleChangeFile}
+              data-user-id={user.id}
+              accept="image/jpeg, image/jpg, image/gif, image/png"
+            />
           </Fragment>
         );
       },
@@ -148,20 +181,29 @@ const Users: React.FC = () => {
   };
   return (
     <div>
-      <h1 style={{ marginBottom: "20px", fontSize: "2rem" }}>Quản lí người dùng</h1>
-      <Button
-        // onClick={() => navigate(`/admin/film/addnew`)}
+      <h1 style={{ marginBottom: "20px", fontSize: "2rem" }}>
+        Quản lí người dùng
+      </h1>
+      <button
+        type="button"
+        onClick={() => navigate(`/admin/adduser`)}
+        className="btn btn-outline-secondary "
         style={{ marginBottom: "20px" }}
       >
         Thêm người dùng
-      </Button>
+      </button>
       <Search
-        style={{ marginBottom: "20px", backgroundColor: "#4096ff", borderRadius:"5px" }}
+        style={{
+          marginBottom: "20px",
+          backgroundColor: "#4096ff",
+          borderRadius: "5px",
+          height: "40px",
+        }}
         placeholder="input search text"
         enterButton="Search"
         size="large"
       />
-      <Table columns={columns} dataSource={data} onChange={onChange} />; ;
+      <Table columns={columns} dataSource={data} onChange={onChange} />
     </div>
   );
 };
