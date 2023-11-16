@@ -14,6 +14,8 @@ import RoomDetail from "../pages/RoomDetail/RoomDetail";
 import Edit from "../pages/Admin/Edit/Edit";
 import AddUser from "../pages/Admin/Users/AddUser/AddUser";
 import EditUser from "../pages/Admin/Users/EditUser/EditUser";
+import AddPlace from "../pages/Admin/Place/AddPlace/AddPlace";
+import EditPlace from "../pages/Admin/Place/EditPlace/EditPlace";
 
 export default function Router() {
   const routing = useRoutes([
@@ -74,6 +76,14 @@ export default function Router() {
         {
           path: "/admin/edit/:id",
           element: <Edit />,
+        },
+        {
+          path: "/admin/addplace",
+          element: <AddPlace />,
+        },
+        {
+          path:"/admin/editplace/:id",
+          element: <EditPlace />
         },
         {
           path: "*",

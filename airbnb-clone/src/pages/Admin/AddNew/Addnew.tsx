@@ -118,6 +118,8 @@ const Addnew: React.FC = () => {
       size={componentSize as SizeType}
       style={{ maxWidth: 880 }}
     >
+      <h3 style={{ marginBottom: "20px" }}>Thêm phòng</h3>
+
       <Form.Item label="ID">
         <InputNumber
           onChange={handleChangeInputNumber("id")}

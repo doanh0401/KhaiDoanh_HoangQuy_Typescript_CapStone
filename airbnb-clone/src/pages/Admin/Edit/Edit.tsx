@@ -1,3 +1,4 @@
+import * as Yup from "yup";
 import React, { useState, useEffect } from "react";
 import { Form, Input, InputNumber, Switch } from "antd";
 import { FormikProps, useFormik } from "formik";
@@ -34,6 +35,45 @@ const Edit: React.FC = () => {
       console.log("errors", errors);
     }
   };
+  const editRoomValidate = Yup.object().shape({
+    id: Yup.number()
+      .required("Vui lòng nhập ID!")
+      .min(1, "Vui lòng nhập ID!")
+      .max(10000, "Vui lòng nhập đúng yêu cầu(1-10000)"),
+    tenPhong: Yup.string()
+      .required("Tên phòng không được để trống!")
+      .matches(
+        /^[ aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ]+$/,
+        "Vui lòng nhập đúng định dạng!"
+      ),
+    khach: Yup.number()
+      .required("Vui lòng nhập số khách!")
+      .min(1, "Vui lòng nhập số khách!")
+      .max(10, "Vui lòng nhập đúng yêu cầu(1-10)"),
+    phongNgu: Yup.number()
+      .required("Vui lòng nhập số phòng ngủ!")
+      .min(1, "Vui lòng nhập số phòng ngủ!")
+      .max(10, "Vui lòng nhập đúng yêu cầu(1-10)"),
+    giuong: Yup.number()
+      .required("Vui lòng nhập số giường!")
+      .min(1, "Vui lòng nhập số giường!")
+      .max(10, "Vui lòng nhập đúng yêu cầu(1-10)"),
+    phongTam: Yup.number()
+      .required("Vui lòng nhập số phòng tắm!")
+      .min(1, "Vui lòng nhập số phòng tắm!")
+      .max(10, "Vui lòng nhập đúng yêu cầu(1-10)"),
+
+    moTa: Yup.string().required("Mo tả không được để trống!"),
+    giaTien: Yup.number()
+      .required("Vui lòng nhập giá tiền!")
+      .min(1, "Vui lòng nhập giá tiền!")
+      .max(100, "Vui lòng nhập đúng yêu cầu(1-100)"),
+
+    maViTri: Yup.number()
+      .required("Vui lòng nhập mã vị trí!")
+      .min(1, "Vui lòng nhập mã vị trí!")
+      .max(100, "Vui lòng nhập đúng yêu cầu(1-100)"),
+  });
 
   const formik: FormikProps<formDataRoom> = useFormik<formDataRoom>({
     enableReinitialize: true,
@@ -58,16 +98,17 @@ const Edit: React.FC = () => {
       maViTri: thongtinPhong?.maViTri,
       hinhAnh: thongtinPhong?.hinhAnh,
     },
+    validationSchema: editRoomValidate,
     onSubmit: async (values: any) => {
       await dispatch(capNhatPhong(values));
     },
   });
-  const capNhatPhong = async (formData:any) => {
+  const capNhatPhong = async (formData: any) => {
     try {
       const result = await adminService.capNhatPhongApi(id, formData);
       console.log(result.data.content);
       alert("Cập nhật thành công!");
-      navigate("/admin/rooms")
+      navigate("/admin/rooms");
     } catch (erors) {
       console.log(erors);
     }
@@ -93,6 +134,8 @@ const Edit: React.FC = () => {
       size={componentSize as SizeType}
       style={{ maxWidth: 880 }}
     >
+      <h3 style={{ marginBottom: "20px" }}>Cập nhật phòng</h3>
+
       <Form.Item label="ID">
         <InputNumber
           onChange={handleChangeInputNumber("id")}
@@ -100,6 +143,14 @@ const Edit: React.FC = () => {
           max={10000}
           value={formik.values.id}
         />
+        {formik.errors.id && formik.touched.id && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.id}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Tên phòng">
         <Input
@@ -107,6 +158,11 @@ const Edit: React.FC = () => {
           onChange={formik.handleChange}
           value={formik.values.tenPhong}
         />
+        {formik.errors.tenPhong && formik.touched.tenPhong && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.tenPhong}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Số khách">
         <InputNumber
@@ -115,6 +171,14 @@ const Edit: React.FC = () => {
           max={10}
           value={formik.values.khach}
         />
+        {formik.errors.khach && formik.touched.khach && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.khach}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Phòng ngủ">
         <InputNumber
@@ -123,6 +187,14 @@ const Edit: React.FC = () => {
           max={10}
           value={formik.values.phongNgu}
         />
+        {formik.errors.phongNgu && formik.touched.phongNgu && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.phongNgu}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Gường">
         <InputNumber
@@ -130,7 +202,15 @@ const Edit: React.FC = () => {
           min={1}
           max={10}
           value={formik.values.giuong}
-        />
+        />{" "}
+        {formik.errors.giuong && formik.touched.giuong && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.giuong}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Phòng tắm">
         <InputNumber
@@ -139,6 +219,14 @@ const Edit: React.FC = () => {
           max={10}
           value={formik.values.phongTam}
         />
+        {formik.errors.phongTam && formik.touched.phongTam && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.phongTam}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Mô tả">
         <Input
@@ -146,6 +234,11 @@ const Edit: React.FC = () => {
           onChange={formik.handleChange}
           value={formik.values.moTa}
         />
+        {formik.errors.moTa && formik.touched.moTa && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.moTa}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Giá tiền">
         <InputNumber
@@ -154,6 +247,14 @@ const Edit: React.FC = () => {
           max={1000}
           value={formik.values.giaTien}
         />
+        {formik.errors.giaTien && formik.touched.giaTien && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.giaTien}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Máy giặt" valuePropName="checked">
         <Switch
@@ -215,7 +316,15 @@ const Edit: React.FC = () => {
           min={1}
           max={100}
           value={formik.values.maViTri}
-        />
+        />{" "}
+        {formik.errors.maViTri && formik.touched.maViTri && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.maViTri}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Tác vụ">
         <button type="submit" className="btn btn-primary">

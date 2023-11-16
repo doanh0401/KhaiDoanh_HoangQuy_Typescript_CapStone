@@ -62,4 +62,10 @@ export interface editUser{
   gender: boolean,
   role: string
 }
-
+export interface addPlace{
+  id: number,
+  tenViTri: string,
+  tinhThanh: string,
+  quocGia: string,
+  hinhAnh: string
+}
