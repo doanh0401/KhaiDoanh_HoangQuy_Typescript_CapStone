@@ -149,19 +149,13 @@ const Users: React.FC = () => {
                 cursor: "pointer",
               }}
               onClick={() => {
-                if (window.confirm("Bạn có chắc muốn xóa phim này không?")) {
+                if (window.confirm("Bạn có chắc muốn xóa người dùng này không?")) {
                   fetchDelete(user.id);
                 }
               }}
             >
               <DeleteOutlined />
             </span>
-            <input
-              type="file"
-              onChange={handleChangeFile}
-              data-user-id={user.id}
-              accept="image/jpeg, image/jpg, image/gif, image/png"
-            />
           </Fragment>
         );
       },

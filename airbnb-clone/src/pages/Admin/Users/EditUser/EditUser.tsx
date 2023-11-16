@@ -1,3 +1,4 @@
+import * as Yup from "yup";
 import React, { useState, useEffect } from "react";
 import { DatePicker, Form, Input, InputNumber, Select, Switch } from "antd";
 import { FormikProps, useFormik } from "formik";
@@ -20,7 +21,24 @@ const EditUser: React.FC = () => {
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
     setComponentSize(size);
   };
-
+  const editUserValidate = Yup.object().shape({
+    id: Yup.number()
+      .required("Vui lòng nhập ID!")
+      .min(1, "Vui lòng nhập ID!")
+      .max(10000, "Vui lòng nhập đúng yêu cầu(1-10000)"),
+    name: Yup.string().required("Tài khoản không được để trống!"),
+    email: Yup.string()
+      .required("Email không được để trống!")
+      .matches(
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Vui lòng nhập đúng định dạng!"
+      ),
+    phone: Yup.string()
+      .required("Số điện thoại không được để trống!")
+      .matches(/^[0-9]+$/, "Vui lòng nhậ đúng định dạng!"),
+    birthday: Yup.string().required("Ngày sinh không được để trống!"),
+    role: Yup.string().required("Loại người dùng không được để trống!"),
+  });
   const { id } = useParams<any>();
   const navigate = useNavigate();
   const dispatch: any = useDispatch();
@@ -49,19 +67,19 @@ const EditUser: React.FC = () => {
       gender: thongtinUser?.gender,
       role: thongtinUser?.role,
     },
+    validationSchema: editUserValidate,
     onSubmit: async (values: any) => {
-        console.log(values);
-        await dispatch(capNhatUser(values))
+      console.log(values);
+      await dispatch(capNhatUser(values));
     },
   });
   const capNhatUser = async (formData: any) => {
     try {
-      const result = await adminService.capNhatUserApi(id,formData);
+      const result = await adminService.capNhatUserApi(id, formData);
       alert("Cập nhật thành công!");
       navigate(`/admin/users`);
     } catch (errors) {
-        console.log(errors);
-        
+      console.log(errors);
     }
   };
   const handleChangeSwitch = (name: string) => {
@@ -95,6 +113,8 @@ const EditUser: React.FC = () => {
       size={componentSize as SizeType}
       style={{ maxWidth: 880 }}
     >
+      <h3 style={{ marginBottom: "20px" }}>Cập nhật người dùng</h3>
+
       <Form.Item label="ID">
         <InputNumber
           onChange={handleChangeInputNumber("id")}
@@ -102,6 +122,14 @@ const EditUser: React.FC = () => {
           max={10000}
           value={formik.values.id}
         />
+        {formik.errors.id && formik.touched.id && (
+          <span
+            className="form-label text-danger"
+            style={{ marginLeft: "10px" }}
+          >
+            {formik.errors.id}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Tài khoản">
         <Input
@@ -109,6 +137,11 @@ const EditUser: React.FC = () => {
           onChange={formik.handleChange}
           value={formik.values.name}
         />
+        {formik.errors.name && formik.touched.name && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.name}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Email">
         <Input
@@ -116,13 +149,23 @@ const EditUser: React.FC = () => {
           onChange={formik.handleChange}
           value={formik.values.email}
         />
+        {formik.errors.email && formik.touched.email && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.email}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Số ĐT">
         <Input
           name="phone"
           onChange={formik.handleChange}
           value={formik.values.phone}
-        />
+        />{" "}
+        {formik.errors.phone && formik.touched.phone && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.phone}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Ngày sinh">
         <DatePicker
@@ -133,13 +176,23 @@ const EditUser: React.FC = () => {
               ? dayjs(formik.values.birthday, "DD/MM/YYYY")
               : dayjs(formik.values.birthday)
           }
-        />
+        />{" "}
+        {formik.errors.birthday && formik.touched.birthday && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.birthday}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Giới tính" valuePropName="checked">
         <Switch
           onChange={handleChangeSwitch("gender")}
           checked={formik.values.gender}
         />
+        {formik.errors.gender && formik.touched.gender && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.gender}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Loại người dùng">
         <Select
@@ -151,6 +204,11 @@ const EditUser: React.FC = () => {
             { value: "USER", label: "Khách hàng" },
           ]}
         />
+        {formik.errors.role && formik.touched.role && (
+          <span className="form-label text-danger" style={{ display: "block" }}>
+            {formik.errors.role}
+          </span>
+        )}
       </Form.Item>
       <Form.Item label="Tác vụ">
         <button type="submit" className="btn btn-primary">
