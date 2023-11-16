@@ -5,7 +5,7 @@ import { RootDispatch } from "../../../store/config";
 import { useDispatch } from "react-redux";
 import { adminService } from "../../../services/admin";
 import { PlaceType } from "../../../interfaces/admin";
-import { EditOutlined, DeleteOutlined, UserOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 const { Search } = Input;
 
@@ -123,23 +123,26 @@ const Place: React.FC = () => {
   return (
     <div>
       <h1 style={{ marginBottom: "20px", fontSize: "2rem" }}>Quản lí vị trí</h1>
-      <Button
-        // onClick={() => navigate(`/admin/film/addnew`)}
+      <button
+        type="button"
+        // onClick={() => navigate(`/admin/addnew`)}
+        className="btn btn-outline-secondary "
         style={{ marginBottom: "20px" }}
       >
         Thêm vị trí
-      </Button>
+      </button>
       <Search
         style={{
           marginBottom: "20px",
           backgroundColor: "#4096ff",
           borderRadius: "5px",
+          height:"40px"
         }}
         placeholder="input search text"
         enterButton="Search"
         size="large"
       />
-      <Table columns={columns} dataSource={data} onChange={onChange} />; ;
+      <Table columns={columns} dataSource={data} onChange={onChange} />
     </div>
   );
 };

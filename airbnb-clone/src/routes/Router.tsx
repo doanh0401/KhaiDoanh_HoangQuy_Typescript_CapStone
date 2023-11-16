@@ -8,26 +8,28 @@ import Room from "../pages/Admin/Rooms/Room";
 import Place from "../pages/Admin/Place/Place";
 import Addnew from "../pages/Admin/AddNew/Addnew";
 import Users from "../pages/Admin/Users/Users";
-import PageNotFound from '../pages/PageNotFound/PageNotFound';
-import Home from '../pages/Home/Home';
-import RoomDetail from '../pages/RoomDetail/RoomDetail';
-
+import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import Home from "../pages/Home/Home";
+import RoomDetail from "../pages/RoomDetail/RoomDetail";
+import Edit from "../pages/Admin/Edit/Edit";
+import AddUser from "../pages/Admin/Users/AddUser/AddUser";
+import EditUser from "../pages/Admin/Users/EditUser/EditUser";
 
 export default function Router() {
   const routing = useRoutes([
     {
       path: "/",
       element: <HomeLayout />,
-        children: [
-          {
-            path: "/",
-            element: <Home />,
-          },
-          {
-            path: "/room-detail/:roomId",
-            element: <RoomDetail />
-          }
-        ]
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/room-detail/:roomId",
+          element: <RoomDetail />,
+        },
+      ],
     },
     {
       path: "/login",
@@ -37,12 +39,25 @@ export default function Router() {
       path: "/register",
       element: <Register />,
     },
-    { path: "/admin", 
+    {
+      path: "/admin",
       element: <AdminLayout />,
-      children:[
+      children: [
+        {
+          path: "/admin",
+          element: <Room />,
+        },
         {
           path: "/admin/users",
           element: <Users />,
+        },
+        {
+          path: "/admin/adduser",
+          element: <AddUser />,
+        },
+        {
+          path: "/admin/edituser/:id",
+          element: <EditUser />,
         },
         {
           path: "/admin/rooms",
@@ -50,17 +65,21 @@ export default function Router() {
         },
         {
           path: "/admin/place",
-          element: <Place />
+          element: <Place />,
         },
         {
           path: "/admin/addnew",
-          element: <Addnew />
+          element: <Addnew />,
+        },
+        {
+          path: "/admin/edit/:id",
+          element: <Edit />,
         },
         {
           path: "*",
-          element: <PageNotFound />
+          element: <PageNotFound />,
         },
-      ]
+      ],
     },
   ]);
 

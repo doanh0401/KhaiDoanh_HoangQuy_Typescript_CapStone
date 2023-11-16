@@ -45,6 +45,75 @@ class AdminService {
       },
     });
   }
+  layThongTinPhongApi(id: any) {
+    return request({
+      url: `/phong-thue/${id}`,
+      method: "GET",
+    });
+  }
+  capNhatPhongApi(id: any, formData: any) {
+    return axios({
+      url: `https://airbnbnew.cybersoft.edu.vn/api/phong-thue/${id}`,
+      method: "PUT",
+      data: formData,
+      headers: {
+        tokenCybersoft:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MSIsIkhldEhhblN0cmluZyI6IjIzLzAyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcwODY0NjQwMDAwMCIsIm5iZiI6MTY4MDM2ODQwMCwiZXhwIjoxNzA4Nzk0MDAwfQ.m054V9MFrBY26j2t-FxqIXGcOVQim2UUk_G-OoewJUY",
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQyODEiLCJlbWFpbCI6ImFzZGZnaEBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTkwNzUxNzAsImV4cCI6MTY5OTY3OTk3MH0.NEFStt2nvLa7Io5NxebE-TkaEhYPHF71SoDbQauvGlw",
+      },
+    });
+  }
+  xoaPhongApi(id: any) {
+    return axios({
+      url: `https://airbnbnew.cybersoft.edu.vn/api/phong-thue/${id}`,
+      method: "DELETE",
+      headers: {
+        tokenCybersoft:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MSIsIkhldEhhblN0cmluZyI6IjIzLzAyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcwODY0NjQwMDAwMCIsIm5iZiI6MTY4MDM2ODQwMCwiZXhwIjoxNzA4Nzk0MDAwfQ.m054V9MFrBY26j2t-FxqIXGcOVQim2UUk_G-OoewJUY",
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQyODEiLCJlbWFpbCI6ImFzZGZnaEBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTkwNzUxNzAsImV4cCI6MTY5OTY3OTk3MH0.NEFStt2nvLa7Io5NxebE-TkaEhYPHF71SoDbQauvGlw",
+      },
+    });
+  }
+  themUserApi(formData: any) {
+    return axios({
+      url: `https://airbnbnew.cybersoft.edu.vn/api/users`,
+      method: "POST",
+      data: formData,
+      headers: {
+        tokenCybersoft:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MSIsIkhldEhhblN0cmluZyI6IjIzLzAyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcwODY0NjQwMDAwMCIsIm5iZiI6MTY4MDM2ODQwMCwiZXhwIjoxNzA4Nzk0MDAwfQ.m054V9MFrBY26j2t-FxqIXGcOVQim2UUk_G-OoewJUY",
+      },
+    });
+  }
+  xoaUserApi(id: any) {
+    return axios({
+      url: `https://airbnbnew.cybersoft.edu.vn/api/users?id=${id}`,
+      method: "DELETE",
+      headers: {
+        tokenCybersoft:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MSIsIkhldEhhblN0cmluZyI6IjIzLzAyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcwODY0NjQwMDAwMCIsIm5iZiI6MTY4MDM2ODQwMCwiZXhwIjoxNzA4Nzk0MDAwfQ.m054V9MFrBY26j2t-FxqIXGcOVQim2UUk_G-OoewJUY",
+      },
+    });
+  }
+  layThongTinUser(id: any) {
+    return request({
+      url: `/users/${id}`,
+      method: "GET",
+    });
+  }
+  capNhatUserApi(id: any, formData: any) {
+    return axios({
+      url: `https://airbnbnew.cybersoft.edu.vn/api/users/${id}`,
+      method: "PUT",
+      data: formData,
+      headers: {
+        tokenCybersoft:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MSIsIkhldEhhblN0cmluZyI6IjIzLzAyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcwODY0NjQwMDAwMCIsIm5iZiI6MTY4MDM2ODQwMCwiZXhwIjoxNzA4Nzk0MDAwfQ.m054V9MFrBY26j2t-FxqIXGcOVQim2UUk_G-OoewJUY",
+      },
+    });
+  }
 }
 
 export const adminService: AdminService = new AdminService();
