@@ -15,8 +15,7 @@ const rootReducer = combineReducers({
 export const store = configureStore({
     reducer: persistReducer({
         key: 'root',
-        storage,
-        whitelist: ["xucXacReducer"],
+        storage
     }, rootReducer),
     devTools:true,
     middleware: (config) => config({

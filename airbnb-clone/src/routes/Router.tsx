@@ -16,6 +16,8 @@ import AddUser from "../pages/Admin/Users/AddUser/AddUser";
 import EditUser from "../pages/Admin/Users/EditUser/EditUser";
 import AddPlace from "../pages/Admin/Place/AddPlace/AddPlace";
 import EditPlace from "../pages/Admin/Place/EditPlace/EditPlace";
+import UserInfo from "../pages/UserInfo/UserInfo";
+import RoomByUser from "../pages/RoomByUser/RoomByUser";
 
 export default function Router() {
   const routing = useRoutes([
@@ -30,6 +32,18 @@ export default function Router() {
         {
           path: "/room-detail/:roomId",
           element: <RoomDetail />,
+        },
+        {
+          path: "/personal-info",
+          element: <UserInfo />,
+        },
+        {
+          path: "/ticket-by-user",
+          element: <RoomByUser />,
+        },
+        {
+          path: "*",
+          element: <PageNotFound />,
         },
       ],
     },
