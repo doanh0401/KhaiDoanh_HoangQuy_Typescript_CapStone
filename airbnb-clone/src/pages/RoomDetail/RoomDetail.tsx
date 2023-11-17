@@ -30,9 +30,9 @@ import { roomService } from "../../services/room";
 
 
 export default function RoomDetails() {
-  const param = useParams();
+  const param = useParams();  
   // const [_, setLoadingState] = useContext(LoadingContext);
-  const dispatch = useDispatch();
+  const dispatch:any = useDispatch();
   const [feedBackRoom, setFeedBackRoom] = useState <any> ([]);
   const [roomDetail, setRoomDetail] = useState <any> ({});
   const [roomDetailLocation, setRoomDetailLocation] = useState <any> ({});
@@ -46,6 +46,8 @@ export default function RoomDetails() {
   const fetchRoomDetail = async () => {
     //setLoadingState({ isLoading: true });
     const roomDetailResult = await roomService.fetchRoomDetailApi(param.roomId);
+    console.log(roomDetailResult.data.content);
+    
     const maViTri = roomDetailResult.data.content.maViTri;
     if (maViTri > 0) {
       const roomLocationResult = await roomService.fetchRoomLocationDetailApi(maViTri);
@@ -361,7 +363,7 @@ export default function RoomDetails() {
                       </div>
                     </div>
                     <div>
-                      <BookingRoom />
+                      {/* <BookingRoom /> */}
                     </div>
                   </div>
                 </div>
