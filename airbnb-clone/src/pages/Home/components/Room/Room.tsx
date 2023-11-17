@@ -27,7 +27,7 @@ export default function Room() {
   };
 
   const handleBooking = (roomId: string) => {
-    if (userState) {
+    if (userState) {   
       redirect(`/room-detail/${roomId}`);
     } else {
       redirect("/login");

@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserLogin } from "../../interfaces/user";
+import { RoomDto } from "../../interfaces/room";
 
 
-interface UserState {
-  userInfo: UserLogin | null;
+interface RoomState {
+  roomInfo: RoomDto | null;
 }
-const DEFAULT_STATE: UserState = {
-  userInfo: null,
+const DEFAULT_STATE : RoomState = {
+  roomInfo: null,
 };
 
 const roomSlice = createSlice({
   name: "roomSlice",
   initialState: DEFAULT_STATE,
   reducers: {
-    setUserInfo(state: UserState, action: PayloadAction<UserLogin>) {
-      state.userInfo = action.payload;
+    setRoomInfo(state: RoomState, action: PayloadAction<any>) {
+      state.roomInfo = action.payload;
     },
   },
 });

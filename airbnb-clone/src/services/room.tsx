@@ -23,9 +23,47 @@ class RoomService {
           method: "GET",
         })
       };
-      fetchRoomDetailApi(roomId:number): Promise<AxiosResponse<any>> {
+      fetchRoomDetailApi(roomId:string | undefined): Promise<AxiosResponse<any>> {
         return request({
           url: `/phong-thue/${roomId}`,
+          method: "GET",
+        })
+      };
+      fetchCommentRoomApi(id:string | undefined): Promise<AxiosResponse<any>> {
+        return request({
+          url: `/binh-luan/lay-binh-luan-theo-phong/${id}`,
+          method: "GET",
+        })
+      };
+      sendCommentApi(data:any): Promise<AxiosResponse<any>> {
+        return request({
+          url: `/binh-luan`,
+          method: "POST",
+          data,
+        })
+      };
+      bookingRoomApi(data:any): Promise<AxiosResponse<any>> {
+        return request({
+          url: `/dat-phong`,
+          method: "POST",
+          data,
+        })
+      };
+      fetchBookingRoomApi(): Promise<AxiosResponse<any>> {
+        return request({
+          url: `/dat-phong`,
+          method: "GET",
+        })
+      };
+      fetchRoomByCityApi(cityId:string | undefined): Promise<AxiosResponse<any>> {
+        return request({
+          url: `/phong-thue/lay-phong-theo-vi-tri?maViTri=${cityId}`,
+          method: "GET",
+        })
+      };
+      fetchRoomLocationDetailApi(roomId:any): Promise<AxiosResponse<any>> {
+        return request({
+          url: `/vi-tri/${roomId}`,
           method: "GET",
         })
       };
