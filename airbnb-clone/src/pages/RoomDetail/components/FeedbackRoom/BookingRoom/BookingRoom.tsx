@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
-//import "./BookingRoom.scss"
+import "./BookingRoom.scss"
 import moment from 'moment';
 import { roomService } from '../../../../../services/room';
 import { useSelector } from 'react-redux';
@@ -27,8 +27,6 @@ export default function BookingRoom() {
   const [serviceFee, setServiceFee] = useState<any>(0);
 
   const [bookedRooms, setBookedRooms] = useState<any>([]);
-
-  // const [disabledDates, setDisabledDates] = useState([]);
 
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(),
@@ -122,7 +120,7 @@ export default function BookingRoom() {
       })
     }
   };
-  const getDisabledDates = (maPhong:number) => {
+  const getDisabledDates = (maPhong:String) => {
     const bookedDatesForRoom = bookedRooms
       .filter((room:any) => room.maPhong === maPhong)
       .map((room:any) => {
@@ -193,7 +191,7 @@ export default function BookingRoom() {
       <button
         type="submit"
         onClick={bookingRoom}
-        className="w-full py-3 mt-3 rounded-lg text-white text-lg font-semibold btn-bookroom"
+        className="w-full py-3 mt-3 rounded-lg text-white text-lg font-semibold btn btn-bookroom"
         disabled={countGuest === 0 || numNights === 0 ? true : false}
       >
         Đặt phòng
