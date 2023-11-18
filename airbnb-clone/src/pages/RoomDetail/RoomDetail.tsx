@@ -18,6 +18,7 @@ import TvIcon from '@mui/icons-material/Tv';
 import WifiIcon from '@mui/icons-material/Wifi';
 import WavesIcon from '@mui/icons-material/Waves';
 import PersonIcon from '@mui/icons-material/Person';
+import AirCover from '../../img/AirCover.png';
 //import "./RoomDetails.scss";
 import { useParams } from "react-router-dom";
 import FeedbackRoom from "./components/FeedbackRoom/FeedbackRoom";
@@ -230,7 +231,7 @@ export default function RoomDetails() {
               </div>
               <div className="mt-5 pb-5 border-b">
                 <h2>
-                  <img className="h-7 mb-4" src={"../../../public/img/AirCover.png"} alt="..." />
+                  <img className="h-7 mb-4" src={AirCover} alt="..." />
                 </h2>
                 <p className="text-base tracking-wider text-gray-800 mb-2">
                   Mọi đặt phòng đều được bảo vệ miễn phí trong trường hợp Chủ
@@ -363,7 +364,7 @@ export default function RoomDetails() {
                       </div>
                     </div>
                     <div>
-                      {/* <BookingRoom /> */}
+                      <BookingRoom />
                     </div>
                   </div>
                 </div>

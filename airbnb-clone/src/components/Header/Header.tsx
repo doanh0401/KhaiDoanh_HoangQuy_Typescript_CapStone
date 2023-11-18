@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import "./Header.scss";
+import "./Header.scss";
 import LanguageIcon from '@mui/icons-material/Language';
 import HeaderProfile from "./components/HeaderProfile";
 import { Link, NavLink } from "react-router-dom";
@@ -43,7 +43,7 @@ export default function Header() {
 
   return (
     <nav className="fixed top-0 border-b w-full bg-white z-20">
-      <div className="container mx-auto px-2 sm:px-10 py-5 max-sm:py-10 flex  justify-between items-center">
+      <div className="container mx-auto px-2 sm:px-10 py-5-tail max-sm:py-10 flex  justify-between items-center">
         <NavLink
           to="/"
           className="hidden sm:flex flex-wrap items-center text-rose-500 z-20 active header-search"
@@ -71,13 +71,13 @@ export default function Header() {
         >
           <div className={`flex flex-wrap justify-center items-center 
           ${showLocationDropdown ? "" : "hidden"}`} onClick={() => setShowLocationDropdown(!showLocationDropdown)}>
-            <Link to="/" className="mx-2 active">
+            <Link to="/" className="mx-2 active decoration-black">
               Chỗ ở
             </Link>
-            <Link to="/" className="mx-2 active">
+            <Link to="/" className="mx-2 active decoration-black">
               Trải nghiệm
             </Link>
-            <Link to="/" className="mx-2">
+            <Link to="/" className="mx-2 decoration-black">
               Trải nghiệm trực tuyến
             </Link>
           </div>
@@ -116,10 +116,7 @@ export default function Header() {
           </div>
         </div>
         <div className={`absolute top-0 left-0 w-screen bg-white transition-all duration-300 pb-3 z-10 absolute top-0 left-0 w-screen bg-white transition-all duration-300 pb-3 z-10  shadow-lg ${showLocationDropdown ? "transition-slide-down active" : "transition-slide-down"}`} style={{ paddingTop: "4.4rem" }}>
-          <div
-
-
-            className="flex flex-wrap justify-center items-center"
+          <div className="flex flex-wrap justify-center items-center"
           >
             <div className="flex  items-center relative  transition-all duration-300 h-16 rounded-full border search-location">
               <div className="hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center">
@@ -167,7 +164,7 @@ export default function Header() {
         <div className="hidden sm:block flex-initial col-end-6 z-20" style={{ flex: "1 1 25%" }}>
           <div className="relative flex items-center justify-end">
             <div className="mr-4 flex items-center z-10">
-              <a className="inline-block rounded-full py-2 px-3 hover:bg-gray-200" href="">
+              <a className="inline-block rounded-full py-2 px-3 hover:bg-gray-200 decoration-black" href="">
                 <div className="hidden relative lg:flex cursor-pointer items-center whitespace-nowrap">Trở thành chủ nhà
                 </div>
               </a>
