@@ -212,7 +212,7 @@ const Room: React.FC = () => {
         className="btn btn-outline-secondary "
         style={{ marginBottom: "20px" }}
       >
-        Thêm phim
+        Thêm phòng
       </button>
       <br></br>
       <button

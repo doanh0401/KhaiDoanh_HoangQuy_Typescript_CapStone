@@ -1,4 +1,3 @@
-import axios from "axios";
 import { request } from "../configs/api";
 import { UserDisplay, UserLogin, UserRegister } from "../interfaces/user";
 

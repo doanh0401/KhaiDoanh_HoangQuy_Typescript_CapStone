@@ -19,6 +19,8 @@ import EditPlace from "../pages/Admin/Place/EditPlace/EditPlace";
 import UserInfo from "../pages/UserInfo/UserInfo";
 import RoomByUser from "../pages/RoomByUser/RoomByUser";
 import RoomByMaViTri from "../pages/RoomByMaViTri/RoomByMaViTri";
+import AuthGuard from "../guards/AuthGuard";
+import AdminGuard from "../guards/AdminGuard";
 
 export default function Router() {
   const routing = useRoutes([
@@ -32,7 +34,10 @@ export default function Router() {
         },
         {
           path: "/room-detail/:roomId",
-          element: <RoomDetail />,
+          element: (<AuthGuard>
+                      <RoomDetail />
+          </AuthGuard>
+          ),
         },
         {
           path: "/personal-info",
@@ -63,7 +68,11 @@ export default function Router() {
     },
     {
       path: "/admin",
-      element: <AdminLayout />,
+      element:(
+        <AdminGuard>
+          <AdminLayout />
+        </AdminGuard>
+      ),
       children: [
         {
           path: "/admin",
