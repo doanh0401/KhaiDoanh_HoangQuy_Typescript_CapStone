@@ -171,6 +171,24 @@ class AdminService {
       },
     });
   }
+  searchRoomApi(keyword:any){
+    return request({
+      url: `/phong-thue/phan-trang-tim-kiem?pageIndex=1&pageSize=10&keyword=${keyword}`,
+      method:"GET",
+    })
+  }
+  searchUserApi(keyword:any){
+    return request({
+      url: `/users/phan-trang-tim-kiem?pageIndex=1&pageSize=10&keyword=${keyword}`,
+      method:"GET",
+    })
+  }
+  searchPlaceApi(keyword:any){
+    return request({
+      url: `/vi-tri/phan-trang-tim-kiem?pageIndex=1&pageSize=10&keyword=${keyword}`,
+      method:"GET",
+    })
+  }
 }
 
 export const adminService: AdminService = new AdminService();

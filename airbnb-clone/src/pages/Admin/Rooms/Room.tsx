@@ -8,11 +8,12 @@ import { RoomType } from "../../../interfaces/admin";
 import { adminService } from "../../../services/admin";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { FormikProps, useFormik } from "formik";
+import { current } from "@reduxjs/toolkit";
 const { Search } = Input;
 
 const Room: React.FC = () => {
   const dispatch: any = useDispatch();
-  
+
   const [roomsList, setRoomsList] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -22,7 +23,7 @@ const Room: React.FC = () => {
     try {
       const result = await adminService.listRooms();
       const content = result.data.content;
-      console.log(content);
+      console.log(result);
       setRoomsList(content);
     } catch (err) {
       console.log(err);
@@ -80,6 +81,17 @@ const Room: React.FC = () => {
       dispatch(getRoomListApi());
     } catch (errors: any) {
       console.log("errors", errors.response?.data);
+    }
+  };
+  const onSearch = async (keyword: any) => {
+    try {
+      const result = await adminService.searchRoomApi(keyword);
+      const data = result.data.content.data
+      // console.log(roomsList);
+      console.log(data);
+      setRoomsList(data);
+    } catch (errors) {
+      console.log(errors);
     }
   };
   const columns: ColumnsType<RoomType> = [
@@ -177,6 +189,7 @@ const Room: React.FC = () => {
   const handleSubmit = () => {
     formik.handleSubmit();
   };
+
   const data = roomsList;
 
   const onChange: TableProps<RoomType>["onChange"] = (
@@ -185,8 +198,9 @@ const Room: React.FC = () => {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    console.log(pagination, filters, sorter, extra);
   };
+
   return (
     <div>
       <h1 style={{ marginBottom: "20px", fontSize: "2rem" }}>
@@ -216,6 +230,7 @@ const Room: React.FC = () => {
           borderRadius: "5px",
           height: "40px",
         }}
+        onSearch={onSearch}
         placeholder="input search text"
         enterButton="Search"
         size="large"

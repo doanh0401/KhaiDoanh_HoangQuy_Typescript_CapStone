@@ -67,5 +67,11 @@ class RoomService {
           method: "GET",
         })
       };
+      fetchRoomByMaVTApi(maViTri:any): Promise<AxiosResponse<any>>{
+        return request({
+          url:`/phong-thue/lay-phong-theo-vi-tri?maViTri=${maViTri}`,
+          method:"GET"
+        })
+      }
 }
 export const roomService: RoomService = new RoomService();

@@ -72,6 +72,18 @@ const Users: React.FC = () => {
       formik.setFieldValue("hinhAnh", e.target.files[0]);
     }
   };
+  const onSearch = async (keyword: any) => {
+    try {
+      const result = await adminService.searchUserApi(keyword);
+      const data = result.data.content.data
+      // console.log(roomsList);
+      console.log(data);
+      setUsersList(data);
+    } catch (errors) {
+      console.log(errors);
+    }
+  };
+
   const columns: ColumnsType<UserType> = [
     {
       title: "ID",
@@ -164,7 +176,6 @@ const Users: React.FC = () => {
   ];
 
   const data = usersList;
-  const onSearch = () => {};
   const onChange: TableProps<UserType>["onChange"] = (
     pagination,
     filters,
@@ -193,6 +204,7 @@ const Users: React.FC = () => {
           borderRadius: "5px",
           height: "40px",
         }}
+        onSearch={onSearch}
         placeholder="input search text"
         enterButton="Search"
         size="large"

@@ -18,6 +18,7 @@ import AddPlace from "../pages/Admin/Place/AddPlace/AddPlace";
 import EditPlace from "../pages/Admin/Place/EditPlace/EditPlace";
 import UserInfo from "../pages/UserInfo/UserInfo";
 import RoomByUser from "../pages/RoomByUser/RoomByUser";
+import RoomByMaViTri from "../pages/RoomByMaViTri/RoomByMaViTri";
 
 export default function Router() {
   const routing = useRoutes([
@@ -42,9 +43,14 @@ export default function Router() {
           element: <RoomByUser />,
         },
         {
+          path: "/room-by-city/:maViTri",
+          element: <RoomByMaViTri />,
+        },
+        {
           path: "*",
           element: <PageNotFound />,
         },
+
       ],
     },
     {

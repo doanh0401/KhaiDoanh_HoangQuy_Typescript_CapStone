@@ -82,6 +82,17 @@ const Place: React.FC = () => {
   const handleSubmit = () => {
     formik.handleSubmit();
   };
+  const onSearch = async (keyword: any) => {
+    try {
+      const result = await adminService.searchPlaceApi(keyword);
+      const data = result.data.content.data
+      // console.log(roomsList);
+      console.log(data);
+      setPlaceList(data);
+    } catch (errors) {
+      console.log(errors);
+    }
+  };
   const columns: ColumnsType<PlaceType> = [
     {
       title: "ID",
@@ -204,6 +215,7 @@ const Place: React.FC = () => {
           borderRadius: "5px",
           height: "40px",
         }}
+        onSearch={onSearch}
         placeholder="input search text"
         enterButton="Search"
         size="large"
