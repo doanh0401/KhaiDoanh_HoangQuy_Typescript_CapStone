@@ -115,10 +115,10 @@ export default function Header() {
             </div>
           </div>
         </div>
-        <div className={`absolute top-0 left-0 w-screen bg-white transition-all duration-300 pb-3 z-10 absolute top-0 left-0 w-screen bg-white transition-all duration-300 pb-3 z-10  shadow-lg ${showLocationDropdown ? "transition-slide-down active" : "transition-slide-down"}`} style={{ paddingTop: "4.4rem" }}>
+        <div className={`absolute top-0 left-0 w-screen bg-white transition-all duration-300 pb-3 z-10 shadow-lg ${showLocationDropdown ? "transition-slide-down active" : "transition-slide-down"}`} style={{ paddingTop: "4.4rem" }}>
           <div className="flex flex-wrap justify-center items-center"
           >
-            <div className="flex  items-center relative  transition-all duration-300 h-16 rounded-full border search-location">
+            <div className="flex flex-wrap justify-center items-center relative  transition-all duration-300 h-16 rounded-full border search-location">
               <div className="hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center">
                 <Autocomplete
                   id="country-select-demo"
@@ -157,7 +157,7 @@ export default function Header() {
                 <label htmlFor="guest" className="block text-sm font-medium text-gray-900 dark:text-gray-300">Khách</label>
                 <input name="guest" type="number" id="guest" className="bg-transparent outline-none" placeholder="Thêm khách" />
               </div>
-              <button onClick={handleSearchClick} className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">Tìm kiếm</button>
+              <button onClick={handleSearchClick} className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5-tail py-2.5 text-center mr-2 absolute right-0">Tìm kiếm</button>
             </div>
           </div>
         </div>
