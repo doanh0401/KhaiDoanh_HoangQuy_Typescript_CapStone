@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { UserRegister } from "../../interfaces/user";
 import { userService } from "../../services/user";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
-export default function Register() {  
-  const navigate = useNavigate();
+export default function Register() {
+  const dispatch = useDispatch();
+
   const [fieldErrors, setFieldErrors] = useState({
     email: "",
   });
@@ -41,7 +42,7 @@ export default function Register() {
     try {
       await userService.signUpUser(values);
 
-      navigate("/login");
+      redirect("/login");
 
       resetForm();
     } catch (error) {

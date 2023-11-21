@@ -20,7 +20,7 @@ export default function UserInfo() {
   });
 
   const stateUser = useSelector((state:any) => state.userReducer);
-  const [userInfo, setUserInfo] = useState <any>({
+  const [userInfo, setUserInfo] = useState({
     name: '',
     birthday: '',
     email: '',

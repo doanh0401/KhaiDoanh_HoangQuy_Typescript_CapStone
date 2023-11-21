@@ -7,7 +7,6 @@ import { userService } from "../../services/user";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userActions } from "../../store/reducers/userReducer";
-import Swal from "sweetalert2";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -25,21 +24,10 @@ export default function Login() {
       dispatch(userActions.setUserInfo(result.data.content));
       
       localStorage.setItem("USER_INFO", JSON.stringify(result.data.content));
-      
-      Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Đăng nhập thành công',
-      });
 
       resetForm();
-    } catch (error:any) {
+    } catch (error) {
       resetForm();
-      Swal.fire({
-        icon: 'error',
-        title: `${error.response.data.content}`,
-        text: 'Xin hãy thử lại',
-      });
     }
   };
 
