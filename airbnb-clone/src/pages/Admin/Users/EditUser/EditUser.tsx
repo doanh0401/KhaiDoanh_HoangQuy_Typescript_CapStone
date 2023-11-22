@@ -6,7 +6,7 @@ import { adminService } from "../../../../services/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { adminActions } from "../../../../store/reducers/adminReducer";
-import { addUser, editUser } from "../../../../interfaces/admin";
+import { editUser } from "../../../../interfaces/admin";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);

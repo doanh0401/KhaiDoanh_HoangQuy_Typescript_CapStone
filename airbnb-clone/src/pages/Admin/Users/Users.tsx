@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, Table, Input } from "antd";
+import { Table, Input } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { EditOutlined, DeleteOutlined, UserOutlined } from "@ant-design/icons";
-import { RootDispatch } from "../../../store/config";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { UserType } from "../../../interfaces/admin";
 import { adminService } from "../../../services/admin";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FormikProps, useFormik } from "formik";
 const { Search } = Input;
 const Users: React.FC = () => {
   const dispatch: any = useDispatch();
@@ -28,20 +26,6 @@ const Users: React.FC = () => {
       console.log(err);
     }
   };
-  const [imgSrc, setImgSrc] = useState<any | null>("");
-  const formik: FormikProps<any> = useFormik<any>({
-    initialValues: {
-      maPhong: "",
-      hinhAnh: {},
-    },
-    onSubmit: async (values: any) => {
-      let formFile = new FormData();
-      formFile.append("formFile", values.hinhAnh, values.hinhAnh.name);
-      console.log(values.hinhAnh);
-      console.log(values.maPhong);
-      // await dispatch(uploadImg(values.maPhong, formFile));
-    },
-  });
   const fetchDelete = async (id: any) => {
     try {
       const result = await adminService.xoaUserApi(id);
@@ -51,31 +35,10 @@ const Users: React.FC = () => {
       console.log("errors", errors.response?.data);
     }
   };
-  const handleChangeFile = (e: any) => {
-    if (
-      e.target.files[0].type === "image/jpeg" ||
-      e.target.files[0].type === "image/jpg" ||
-      e.target.files[0].type === "image/gif" ||
-      e.target.files[0].type === "image/png"
-    ) {
-      let reader = new FileReader();
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onload = (e) => {
-          setImgSrc(e.target?.result);
-        };
-      }
-      const maPhong = e.target.getAttribute("data-room-id"); // Lấy mã phòng từ thuộc tính data-room-id
-      console.log("Mã phòng:", maPhong);
-
-      formik.setFieldValue("maPhong", maPhong);
-      formik.setFieldValue("hinhAnh", e.target.files[0]);
-    }
-  };
   const onSearch = async (keyword: any) => {
     try {
       const result = await adminService.searchUserApi(keyword);
-      const data = result.data.content.data
+      const data = result.data.content.data;
       // console.log(roomsList);
       console.log(data);
       setUsersList(data);
@@ -160,7 +123,9 @@ const Users: React.FC = () => {
                 cursor: "pointer",
               }}
               onClick={() => {
-                if (window.confirm("Bạn có chắc muốn xóa người dùng này không?")) {
+                if (
+                  window.confirm("Bạn có chắc muốn xóa người dùng này không?")
+                ) {
                   fetchDelete(user.id);
                 }
               }}

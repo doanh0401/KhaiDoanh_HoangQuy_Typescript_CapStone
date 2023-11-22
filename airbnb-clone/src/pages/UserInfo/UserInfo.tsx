@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../../services/user";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import {
+  ErrorMessage,
+  Field,
+  Form,
+  Formik,
+  FormikProps,
+  useFormik,
+} from "formik";
 import { DatePicker } from "antd";
 
 export default function UserInfo() {
+  const dispatch: any = useDispatch();
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("(*) Họ tên không được để trống"),
     birthday: Yup.string().required("(*) Ngày sinh không được để trống"),
@@ -19,39 +28,89 @@ export default function UserInfo() {
     gender: Yup.string().required("(*) Giới tính không được để trống"),
   });
 
-  const stateUser = useSelector((state:any) => state.userReducer);
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    birthday: '',
-    email: '',
-    phone: '',
-    gender: '',
+  const uploadAvatar = async (formFile: any) => {
+    try {
+      const result = await userService.uploadAvatarApi(formFile);
+      alert("Upload thành công!");
+      window.location.reload();
+    } catch (errors) {
+      console.log(errors);
+    }
+  };
+  const formik: FormikProps<any> = useFormik<any>({
+    initialValues: {
+      hinhAnh: {},
+    },
+    onSubmit: async (values: any) => {
+      let formFile = new FormData();
+      formFile.append("formFile", values.hinhAnh, values.hinhAnh.name);
+      console.log(values.hinhAnh);
+      await dispatch(uploadAvatar(formFile));
+    },
   });
+  const [imgSrc, setImgSrc] = useState<any | null>("");
 
+  const handleChangeFile = (e: any) => {
+    if (
+      e.target.files[0].type === "image/jpeg" ||
+      e.target.files[0].type === "image/jpg" ||
+      e.target.files[0].type === "image/gif" ||
+      e.target.files[0].type === "image/png"
+    ) {
+      let reader = new FileReader();
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = (e) => {
+          setImgSrc(e.target?.result);
+        };
+      }
+      formik.setFieldValue("hinhAnh", e.target.files[0]);
+    }
+  };
+  const stateUser = useSelector((state: any) => state.userReducer);
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    birthday: "",
+    email: "",
+    phone: "",
+    gender: "",
+    avatar: "",
+  });
+  const handleSubmit = () => {
+    formik.handleSubmit();
+  };
   const [fieldErrors, setFieldErrors] = useState("");
 
   const getUserInfo = async () => {
     const result = await userService.userInfoApi(stateUser.userInfo.user.id);
-    console.log(result.data.content.birthday);
+    console.log(result.data.content.avatar);
     setUserInfo({
       ...result.data.content,
       birthday: result.data.content.birthday
         ? dayjs(result.data.content.birthday)
         : "",
+      avatar: result.data.content.avatar,
     });
-  }
-  const handleChangeUserInfo = async (values:any, { resetForm } : any) => {
+  };
+  const handleChangeUserInfo = async (values: any, { resetForm }: any) => {
     const formattedValues = {
       ...values,
-      birthday: values.birthday ? dayjs(values.birthday).format("MM-DD-YYYY") : null,
+      birthday: values.birthday
+        ? dayjs(values.birthday).format("MM-DD-YYYY")
+        : null,
     };
-    (formattedValues.gender === 'Nam') ? formattedValues.gender=true : formattedValues.gender=false; 
+    formattedValues.gender === "Nam"
+      ? (formattedValues.gender = true)
+      : (formattedValues.gender = false);
     try {
-      await userService.updateUserInfoApi(stateUser.userInfo.user.id, formattedValues);
+      await userService.updateUserInfoApi(
+        stateUser.userInfo.user.id,
+        formattedValues
+      );
       getUserInfo();
       setFieldErrors("");
       resetForm();
-    } catch (error:any) {
+    } catch (error: any) {
       setFieldErrors(error.response.data.content);
       resetForm();
     }
@@ -59,7 +118,7 @@ export default function UserInfo() {
 
   useEffect(() => {
     getUserInfo();
-  }, [])
+  }, []);
   return (
     <div className="container mx-auto px-10">
       <div className="h-28"></div>
@@ -69,12 +128,21 @@ export default function UserInfo() {
             <div>
               <img
                 className="mx-auto rounded-full"
-                src="https://a0.muscache.com/defaults/user_pic-50x50.png?v=3"
+                src={userInfo.avatar}
                 style={{ width: 129, height: 129 }}
               />
-              <button className="text-center text-sm text-gray-600 underline hover:text-black duration-150 block mx-auto">
+              <button
+                className="text-center text-sm text-gray-600 underline hover:text-black duration-150 block mx-auto"
+                type="button"
+                onClick={handleSubmit}
+              >
                 Cập nhật ảnh
               </button>
+              <input
+                type="file"
+                onChange={handleChangeFile}
+                accept="image/jpeg, image/jpg, image/gif, image/png"
+              />
             </div>
             <div className="mt-2">
               <div className="flex items-center">
@@ -110,10 +178,11 @@ export default function UserInfo() {
         <div className="w-full md:w-3/4 lg:w-3/5">
           <div className="px-10">
             <Formik
-            enableReinitialize
-            initialValues={userInfo}
-            validationSchema={validationSchema}
-            onSubmit={handleChangeUserInfo}>
+              enableReinitialize
+              initialValues={userInfo}
+              validationSchema={validationSchema}
+              onSubmit={handleChangeUserInfo}
+            >
               <Form>
                 <div className="md:grid md:grid-cols-1 gap-x-4 gap-y-1">
                   <div className="form-group">
@@ -138,12 +207,14 @@ export default function UserInfo() {
                       <span className="text-red-600">*</span> Ngày sinh
                     </label>
                     <Field name="birthday">
-                      {({ field, form } : any) => (
+                      {({ field, form }: any) => (
                         <DatePicker
                           {...field}
                           format="DD/MM/YYYY"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          onChange={(value) => form.setFieldValue("birthday", value)}
+                          onChange={(value) =>
+                            form.setFieldValue("birthday", value)
+                          }
                         />
                       )}
                     </Field>
@@ -198,8 +269,8 @@ export default function UserInfo() {
                       name="gender"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                      <option value={'Nam'}>Nam</option>
-                      <option value={'Nu'}>Nữ</option>
+                      <option value={"Nam"}>Nam</option>
+                      <option value={"Nu"}>Nữ</option>
                     </Field>
                     <ErrorMessage
                       name="gender"
@@ -208,7 +279,7 @@ export default function UserInfo() {
                     />
                   </div>
                 </div>
-                <div className='col-span-2 text-center mt-2'>
+                <div className="col-span-2 text-center mt-2">
                   <button
                     type="submit"
                     className="text-white focus:outline-none focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 bg-red-500 hover:bg-red-800 duration-300 w-1/2"
