@@ -174,7 +174,7 @@ export default function RoomByMaViTri() {
     <div className="container mx-auto">
       <div className="h-28"></div>
       <div className="row">
-        <div className="col-6">
+        <div className="col-lg-6 col-md-12">
           <div className="flex flex-wrap justify-between items-center py-3 ml-4">
             <span className="font-semibold">Hơn 1.000 chổ ở</span>
             <button
@@ -187,7 +187,7 @@ export default function RoomByMaViTri() {
           </div>
           <div className="row">{renderRoom()}</div>
         </div>
-        <div className="col-6 h-screen w-full hidden md:block sticky top-28">
+        <div className="col-md-6 h-screen w-full hidden md:block sticky top-28">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7865141.73985601!2d100.61642350148527!3d15.729899273359116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31157a4d736a1e5f%3A0xb03bb0c9e2fe62be!2zVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700457505861!5m2!1svi!2s"
             width="100%"

@@ -59,6 +59,7 @@ const AddUser: React.FC = () => {
     try {
       const result = await adminService.themUserApi(formData);
       alert("Thêm user thành công!");
+      console.log(result.data.content);      
       navigate("/admin/users");
     } catch (errors) {
       console.log(errors);
