@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../../services/user";
 import dayjs from "dayjs";
@@ -12,10 +12,9 @@ import {
   useFormik,
 } from "formik";
 import { DatePicker } from "antd";
+import { adminService } from "../../services/admin";
 
 export default function UserInfo() {
-  const dispatch: any = useDispatch();
-
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("(*) Họ tên không được để trống"),
     birthday: Yup.string().required("(*) Ngày sinh không được để trống"),
@@ -27,8 +26,17 @@ export default function UserInfo() {
       .min(10, "Số điện thoại phải có ít nhất 10 ký tự"),
     gender: Yup.string().required("(*) Giới tính không được để trống"),
   });
-
-  const uploadAvatar = async (formFile: any) => {
+  const dispatch: any = useDispatch();
+  const stateUser = useSelector((state: any) => state.userReducer);
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    birthday: "",
+    email: "",
+    phone: "",
+    gender: "",
+    avatar: "",
+  });
+  const uploadImg = async (formFile: any) => {
     try {
       const result = await userService.uploadAvatarApi(formFile);
       alert("Upload thành công!");
@@ -45,7 +53,7 @@ export default function UserInfo() {
       let formFile = new FormData();
       formFile.append("formFile", values.hinhAnh, values.hinhAnh.name);
       console.log(values.hinhAnh);
-      await dispatch(uploadAvatar(formFile));
+      await dispatch(uploadImg(formFile));
     },
   });
   const [imgSrc, setImgSrc] = useState<any | null>("");
@@ -67,23 +75,11 @@ export default function UserInfo() {
       formik.setFieldValue("hinhAnh", e.target.files[0]);
     }
   };
-  const stateUser = useSelector((state: any) => state.userReducer);
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    birthday: "",
-    email: "",
-    phone: "",
-    gender: "",
-    avatar: "",
-  });
-  const handleSubmit = () => {
-    formik.handleSubmit();
-  };
   const [fieldErrors, setFieldErrors] = useState("");
 
   const getUserInfo = async () => {
     const result = await userService.userInfoApi(stateUser.userInfo.user.id);
-    console.log(result.data.content.avatar);
+    console.log(result.data.content.birthday);
     setUserInfo({
       ...result.data.content,
       birthday: result.data.content.birthday
@@ -115,7 +111,9 @@ export default function UserInfo() {
       resetForm();
     }
   };
-
+  const handleSubmit = () => {
+    formik.handleSubmit();
+  };
   useEffect(() => {
     getUserInfo();
   }, []);
