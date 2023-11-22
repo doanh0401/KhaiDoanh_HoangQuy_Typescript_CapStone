@@ -86,7 +86,7 @@ const Room: React.FC = () => {
   const onSearch = async (keyword: any) => {
     try {
       const result = await adminService.searchRoomApi(keyword);
-      const data = result.data.content.data
+      const data = result.data.content.data;
       // console.log(roomsList);
       console.log(data);
       setRoomsList(data);
@@ -100,7 +100,7 @@ const Room: React.FC = () => {
       dataIndex: "id",
       sorter: (a, b) => a.id - b.id,
       sortDirections: ["descend"],
-      width: 100,
+      width: 50,
     },
     {
       title: "Hình ảnh",
@@ -112,7 +112,7 @@ const Room: React.FC = () => {
           </Fragment>
         );
       },
-      width: 100,
+      width: 60,
     },
     {
       title: "Tên phòng",
@@ -125,7 +125,7 @@ const Room: React.FC = () => {
         }
         return -1;
       },
-      width: 200,
+      width: 120,
     },
     {
       title: "Số khách",
@@ -135,7 +135,7 @@ const Room: React.FC = () => {
     {
       title: "Mô tả",
       dataIndex: "moTa",
-      width: 800,
+      width: 500,
     },
 
     {
@@ -143,7 +143,7 @@ const Room: React.FC = () => {
       dataIndex: "giaTien",
       sorter: (a, b) => a.giaTien - b.giaTien,
       sortDirections: ["descend"],
-      width: 150,
+      width: 70,
     },
     {
       title: "Hành động",
@@ -183,7 +183,7 @@ const Room: React.FC = () => {
           </Fragment>
         );
       },
-      width: 200,
+      width: 180,
     },
   ];
   const handleSubmit = () => {
@@ -235,7 +235,13 @@ const Room: React.FC = () => {
         enterButton="Search"
         size="large"
       />
-      <Table columns={columns} dataSource={data} onChange={onChange} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        onChange={onChange}
+        scroll={{ x: "100%" , y: 1200 }}
+        sticky={true}
+      />
     </div>
   );
 };

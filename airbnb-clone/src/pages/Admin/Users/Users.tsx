@@ -128,7 +128,6 @@ const Users: React.FC = () => {
       dataIndex: "password",
       width: 150,
     },
-
     {
       title: "Số điện thoại",
       dataIndex: "soDT",

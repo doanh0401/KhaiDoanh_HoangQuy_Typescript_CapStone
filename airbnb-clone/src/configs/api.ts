@@ -15,7 +15,7 @@ if (value !== null) {
 const request: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    TokenCybersoft: TOKEN_CYB,
+    tokenCybersoft: TOKEN_CYB,
     token: Token,
   },
 });
