@@ -1,4 +1,3 @@
-import React from "react";
 import "./Login.scss";
 import { Form, Field, ErrorMessage, Formik } from "formik";
 import * as Yup from "yup";

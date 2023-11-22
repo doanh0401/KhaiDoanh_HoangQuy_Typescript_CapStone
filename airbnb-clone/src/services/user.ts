@@ -29,5 +29,12 @@ class UserService {
       data,
     })
   }
+  uploadAvatarApi(formData:any) {
+    return request({
+      url:`/users/upload-avatar`,
+      method:"POST",
+      data:formData,
+    })
+  }
 }
 export const userService: UserService = new UserService();

@@ -1,14 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, Table, Input } from "antd";
+import { Table, Input } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { RootDispatch } from "../../../store/config";
 import { useDispatch } from "react-redux";
 import { RoomType } from "../../../interfaces/admin";
 import { adminService } from "../../../services/admin";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { FormikProps, useFormik } from "formik";
-import { current } from "@reduxjs/toolkit";
 const { Search } = Input;
 
 const Room: React.FC = () => {
